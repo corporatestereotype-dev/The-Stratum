@@ -38,6 +38,7 @@ interface Agent {
   load: number;
   memory: number;
   efficiency: number;
+  efficiencyHistory: number[];
 }
 
 interface WorkerJob {
@@ -153,19 +154,31 @@ const SystemTelemetry: React.FC<SystemTelemetryProps> = ({ currentPhase }) => {
       // 3. Agent Efficiency Contention: Higher Depth & Load reduces Agent Efficiency
       const agentEfficiencyPenalty = (nextLoad / 100) * 15 + (nextDepth / 128) * 10;
       
-      const updatedAgents: Agent[] = agentNames.map((name, i) => ({
-        id: `AG_0${i}`,
-        designation: name,
-        class: i % 3 === 0 ? 'SENTINEL' : (i % 3 === 1 ? 'ENGINEER' : 'SCOUT'),
-        currentTask: phaseSpecificJobs[Math.floor(Math.random() * phaseSpecificJobs.length)],
-        taskProgress: Math.random() * 100,
-        taskETC: (Math.random() * 5000 + 500) * (1 + nextLoad / 100), // ETC increases with load
-        taskThreadAffinity: i % 8,
-        load: Math.random() * 20 + (nextLoad * 0.5),
-        memory: Math.random() * 15 + 5,
-        efficiency: Math.max(40, (70 + Math.random() * 30) - agentEfficiencyPenalty)
-      }));
-      setAgents(updatedAgents);
+      setAgents(prevAgents => {
+        return agentNames.map((name, i) => {
+          const id = `AG_0${i}`;
+          const currentEfficiency = Math.max(40, (70 + Math.random() * 30) - agentEfficiencyPenalty);
+          const prevAgent = prevAgents.find(a => a.id === id);
+          
+          // Persist history up to 60 points
+          const history = prevAgent?.efficiencyHistory || Array(60).fill(currentEfficiency);
+          const updatedHistory = [...history.slice(1), currentEfficiency];
+
+          return {
+            id,
+            designation: name,
+            class: i % 3 === 0 ? 'SENTINEL' : (i % 3 === 1 ? 'ENGINEER' : 'SCOUT'),
+            currentTask: phaseSpecificJobs[Math.floor(Math.random() * phaseSpecificJobs.length)],
+            taskProgress: Math.random() * 100,
+            taskETC: (Math.random() * 5000 + 500) * (1 + nextLoad / 100),
+            taskThreadAffinity: i % 8,
+            load: Math.random() * 20 + (nextLoad * 0.5),
+            memory: Math.random() * 15 + 5,
+            efficiency: currentEfficiency,
+            efficiencyHistory: updatedHistory
+          };
+        });
+      });
 
       // Update mock Jobs with phase-specific naming
       setJobs(Array.from({ length: 10 }, (_, i) => ({
@@ -268,7 +281,24 @@ const SystemTelemetry: React.FC<SystemTelemetryProps> = ({ currentPhase }) => {
                       </div>
                       <div className="flex items-center gap-2">
                          <span className="text-[8px] text-slate-500 uppercase">Efficiency:</span>
-                         <span className={`${agent.efficiency > 80 ? 'text-emerald-500' : 'text-amber-500'} font-black font-mono`}>{agent.efficiency.toFixed(1)}%</span>
+                         <div className="flex items-center gap-2">
+                           {/* Efficiency Sparkline */}
+                           <div className="w-12 h-4 opacity-60">
+                              <ResponsiveContainer width="100%" height="100%">
+                                <LineChart data={agent.efficiencyHistory.map((val, idx) => ({ val, idx }))}>
+                                  <Line 
+                                    type="monotone" 
+                                    dataKey="val" 
+                                    stroke={agent.efficiency > 80 ? '#10b981' : (agent.efficiency > 60 ? '#f59e0b' : '#ef4444')} 
+                                    strokeWidth={1} 
+                                    dot={false} 
+                                    isAnimationActive={false} 
+                                  />
+                                </LineChart>
+                              </ResponsiveContainer>
+                           </div>
+                           <span className={`${agent.efficiency > 80 ? 'text-emerald-500' : 'text-amber-500'} font-black font-mono`}>{agent.efficiency.toFixed(1)}%</span>
+                         </div>
                       </div>
                     </div>
 

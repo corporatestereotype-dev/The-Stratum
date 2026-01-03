@@ -1,5 +1,48 @@
 
-import { ProjectPhase, PhaseData } from './types';
+import { ProjectPhase, PhaseData, KnowledgeArtifact } from './types';
+
+export const KNOWLEDGE_BASE: KnowledgeArtifact[] = [
+  {
+    id: 'art_morton',
+    label: 'Morton Z-Order',
+    description: 'The spatial addressing fact used to linearize 3D voxels for cache-friendly SVDAG storage.',
+    originPhase: 'p1',
+    consumerPhases: ['p3', 'p4'],
+    type: 'DATA_STRUCT'
+  },
+  {
+    id: 'art_sab',
+    label: 'SharedArrayBuffer',
+    description: 'The zero-copy memory artifact allowing AI workers and Physics kernels to share the world state.',
+    originPhase: 'p5',
+    consumerPhases: ['p2', 'p3'],
+    type: 'SYNC_PRIMITIVE'
+  },
+  {
+    id: 'art_entropy_grad',
+    label: 'Thermal Gradient',
+    description: 'The heuristic derived from entropy simulations used by AI to detect environmental danger.',
+    originPhase: 'p2',
+    consumerPhases: ['p3'],
+    type: 'HEURISTIC'
+  },
+  {
+    id: 'art_dda',
+    label: 'DDA Traversal',
+    description: 'The mathematical fact of stepping rays through grid cells, shared by pathfinders and renderers.',
+    originPhase: 'p4',
+    consumerPhases: ['p1', 'p3'],
+    type: 'RENDER_STUB'
+  },
+  {
+    id: 'art_atomics',
+    label: 'Wait/Notify Atomics',
+    description: 'Low-level synchronization facts used to prevent race conditions during SVDAG writes.',
+    originPhase: 'p5',
+    consumerPhases: ['p1', 'p2'],
+    type: 'SYNC_PRIMITIVE'
+  }
+];
 
 export const PHASES: PhaseData[] = [
   {
@@ -22,6 +65,7 @@ export const PHASES: PhaseData[] = [
       { targetPhase: 'Phase 2', concept: 'Topology-Aware Physics', description: 'DAG adjacency informs cellular automata neighbor lookups.' },
       { targetPhase: 'Phase 4', concept: 'LOD Ray-Skipping', description: 'Hierarchy allows rays to skip empty spatial volumes instantly.' }
     ],
+    relatedArtifacts: ['art_morton', 'art_dda', 'art_atomics'],
     codeSnippet: {
       language: 'rust',
       code: `struct SvdagNode {
@@ -62,6 +106,7 @@ impl SvdagNode {
       { targetPhase: 'Phase 3', concept: 'Danger Heuristics', description: 'AI agents perceive structural stress as a danger metric in GOAP planning.' },
       { targetPhase: 'Phase 5', concept: 'Compute Sync', description: 'Wasm job workers handle overflow physics when GPU kernels saturate.' }
     ],
+    relatedArtifacts: ['art_entropy_grad', 'art_sab', 'art_atomics'],
     codeSnippet: {
       language: 'wgsl',
       code: `@compute @workgroup_size(8, 8, 8)
@@ -95,6 +140,7 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
       { targetPhase: 'Phase 1', concept: 'Path Graph Extraction', description: 'Agent pathfinding executes directly on the Morton-coded SVDAG space.' },
       { targetPhase: 'Phase 2', concept: 'Ecosystem Feedback', description: 'Agent actions (e.g., lighting a fire) feed back into the Entropy Engine.' }
     ],
+    relatedArtifacts: ['art_morton', 'art_sab', 'art_entropy_grad', 'art_dda'],
     codeSnippet: {
       language: 'typescript',
       code: `class GoapPlanner {
@@ -128,6 +174,7 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
       { targetPhase: 'Phase 1', concept: 'G-Buffer Voxel-ID', description: 'Direct DAG pointer sampling allows for per-voxel material properties.' },
       { targetPhase: 'Phase 5', concept: 'Shared Vertex Pools', description: 'Wasm workers dynamically update vertex buffers via atomics.' }
     ],
+    relatedArtifacts: ['art_dda', 'art_morton'],
     codeSnippet: {
       language: 'wgsl',
       code: `fn rayMarch(ro: vec3f, rd: vec3f) -> f32 {
@@ -162,6 +209,7 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
       { targetPhase: 'All Phases', concept: 'Memory Safety', description: 'Rust ownership ensures no race conditions across the voxel buffers.' },
       { targetPhase: 'Phase 3', concept: 'Off-Thread Planning', description: 'Web Workers isolate AI reasoning from the main render loop.' }
     ],
+    relatedArtifacts: ['art_sab', 'art_atomics'],
     codeSnippet: {
       language: 'rust',
       code: `#[wasm_bindgen]

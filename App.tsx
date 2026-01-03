@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { PHASES } from './constants';
 import { PhaseData } from './types';
-import VoxelVisualizer from './components/VoxelVisualizer';
+import KnowledgeTopology from './components/KnowledgeTopology';
 import AIChat from './components/AIChat';
 import SystemTelemetry from './components/SystemTelemetry';
 
@@ -156,7 +156,7 @@ const App: React.FC = () => {
               {/* Right Column: Code & Visual */}
               <div className="md:col-span-7 bg-[#020617] flex flex-col">
                 <div className="p-4 border-b border-slate-800 bg-slate-950/50 flex justify-between items-center">
-                  <span className="text-[9px] font-mono text-slate-500 uppercase font-bold">Interactive_Topology_Map</span>
+                  <span className="text-[9px] font-mono text-slate-500 uppercase font-bold">Knowledge_Topology_Explorer</span>
                   <div className="flex gap-2">
                     <span className="w-2 h-2 rounded-full bg-slate-800"></span>
                     <span className="w-2 h-2 rounded-full bg-slate-800"></span>
@@ -164,7 +164,7 @@ const App: React.FC = () => {
                 </div>
                 
                 <div className="p-6">
-                  <VoxelVisualizer />
+                  <KnowledgeTopology currentPhase={selectedPhase} />
                 </div>
 
                 <div className="flex-1 bg-slate-950 p-4 font-mono text-[11px] border-t border-slate-800 overflow-hidden group">

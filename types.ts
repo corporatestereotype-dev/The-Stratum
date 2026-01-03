@@ -24,6 +24,15 @@ export interface Interlink {
   description: string;
 }
 
+export interface KnowledgeArtifact {
+  id: string;
+  label: string;
+  description: string;
+  originPhase: string;
+  consumerPhases: string[];
+  type: 'DATA_STRUCT' | 'HEURISTIC' | 'SYNC_PRIMITIVE' | 'RENDER_STUB';
+}
+
 export interface PhaseData {
   id: string;
   title: string;
@@ -36,6 +45,7 @@ export interface PhaseData {
   upskilling: string[];
   codeSnippet: CodeSnippet;
   interlinks: Interlink[];
+  relatedArtifacts: string[]; // IDs of KnowledgeArtifacts
 }
 
 export interface Message {
