@@ -18,6 +18,10 @@ export const PHASES: PhaseData[] = [
       }
     ],
     upskilling: ['Graph Theory', 'Combinatorial Optimization'],
+    interlinks: [
+      { targetPhase: 'Phase 2', concept: 'Topology-Aware Physics', description: 'DAG adjacency informs cellular automata neighbor lookups.' },
+      { targetPhase: 'Phase 4', concept: 'LOD Ray-Skipping', description: 'Hierarchy allows rays to skip empty spatial volumes instantly.' }
+    ],
     codeSnippet: {
       language: 'rust',
       code: `struct SvdagNode {
@@ -54,6 +58,10 @@ impl SvdagNode {
       }
     ],
     upskilling: ['Partial Differential Equations', 'Parallel Computing'],
+    interlinks: [
+      { targetPhase: 'Phase 3', concept: 'Danger Heuristics', description: 'AI agents perceive structural stress as a danger metric in GOAP planning.' },
+      { targetPhase: 'Phase 5', concept: 'Compute Sync', description: 'Wasm job workers handle overflow physics when GPU kernels saturate.' }
+    ],
     codeSnippet: {
       language: 'wgsl',
       code: `@compute @workgroup_size(8, 8, 8)
@@ -83,6 +91,10 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
       }
     ],
     upskilling: ['A* Algorithms', 'Probabilistic Models'],
+    interlinks: [
+      { targetPhase: 'Phase 1', concept: 'Path Graph Extraction', description: 'Agent pathfinding executes directly on the Morton-coded SVDAG space.' },
+      { targetPhase: 'Phase 2', concept: 'Ecosystem Feedback', description: 'Agent actions (e.g., lighting a fire) feed back into the Entropy Engine.' }
+    ],
     codeSnippet: {
       language: 'typescript',
       code: `class GoapPlanner {
@@ -112,6 +124,10 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
       }
     ],
     upskilling: ['Linear Algebra', 'PBR Equations'],
+    interlinks: [
+      { targetPhase: 'Phase 1', concept: 'G-Buffer Voxel-ID', description: 'Direct DAG pointer sampling allows for per-voxel material properties.' },
+      { targetPhase: 'Phase 5', concept: 'Shared Vertex Pools', description: 'Wasm workers dynamically update vertex buffers via atomics.' }
+    ],
     codeSnippet: {
       language: 'wgsl',
       code: `fn rayMarch(ro: vec3f, rd: vec3f) -> f32 {
@@ -142,6 +158,10 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
       }
     ],
     upskilling: ['Cache optimization', 'Concurrent Programming'],
+    interlinks: [
+      { targetPhase: 'All Phases', concept: 'Memory Safety', description: 'Rust ownership ensures no race conditions across the voxel buffers.' },
+      { targetPhase: 'Phase 3', concept: 'Off-Thread Planning', description: 'Web Workers isolate AI reasoning from the main render loop.' }
+    ],
     codeSnippet: {
       language: 'rust',
       code: `#[wasm_bindgen]

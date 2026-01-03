@@ -33,10 +33,10 @@ const App: React.FC = () => {
           </div>
           <div className="hidden md:flex gap-6 items-center">
              <div className="h-6 w-px bg-slate-800"></div>
-             <div className="text-[9px] font-mono text-slate-500">
+             <div className="text-[9px] font-mono text-slate-500 uppercase tracking-tighter">
                COORD: <span className="text-sky-500">45.092 / -122.341</span>
              </div>
-             <div className="text-[9px] font-mono text-slate-500">
+             <div className="text-[9px] font-mono text-slate-500 uppercase tracking-tighter">
                STATUS: <span className="text-emerald-500">NOMINAL_OP</span>
              </div>
           </div>
@@ -69,7 +69,7 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          <SystemTelemetry />
+          <SystemTelemetry currentPhase={selectedPhase} />
 
           <div className="flex-1 min-h-[300px]">
             <AIChat currentPhase={selectedPhase} />
@@ -82,20 +82,20 @@ const App: React.FC = () => {
             {/* Phase Header */}
             <div className="bg-slate-900/50 p-6 border-b border-slate-800 flex justify-between items-center">
               <div>
-                <span className="text-[10px] font-mono text-sky-500 bg-sky-500/10 px-2 py-1 rounded border border-sky-500/20">{selectedPhase.title}</span>
+                <span className="text-[10px] font-mono text-sky-500 bg-sky-500/10 px-2 py-1 rounded border border-sky-500/20 uppercase tracking-widest font-bold">{selectedPhase.title}</span>
                 <h2 className="text-2xl font-black text-white mt-2 tracking-tight uppercase">{selectedPhase.subtitle}</h2>
               </div>
               <div className="text-right">
-                <div className="text-[10px] font-mono text-slate-500 mb-1 uppercase">Target Target Platform</div>
-                <div className="text-xs font-bold text-slate-300">{selectedPhase.platform}</div>
+                <div className="text-[10px] font-mono text-slate-500 mb-1 uppercase tracking-tighter font-bold">Target Platform</div>
+                <div className="text-xs font-black text-slate-300 uppercase tracking-wide">{selectedPhase.platform}</div>
               </div>
             </div>
 
             <div className="flex-1 grid md:grid-cols-12 gap-px bg-slate-800">
               {/* Left Column: Details */}
-              <div className="md:col-span-5 bg-slate-950 p-6 space-y-6 overflow-y-auto max-h-[700px]">
+              <div className="md:col-span-5 bg-slate-950 p-6 space-y-8 overflow-y-auto max-h-[800px] scrollbar-hide">
                 <section>
-                   <h3 className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+                   <h3 className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4 flex items-center gap-2 font-bold">
                      <span className="w-4 h-[1px] bg-sky-500"></span> Architectural_Context
                    </h3>
                    <p className="text-sm text-slate-400 leading-relaxed font-medium">
@@ -104,7 +104,7 @@ const App: React.FC = () => {
                 </section>
 
                 <section>
-                   <h3 className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+                   <h3 className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4 flex items-center gap-2 font-bold">
                      <span className="w-4 h-[1px] bg-sky-500"></span> Implementation_Specs
                    </h3>
                    <div className="space-y-4">
@@ -122,9 +122,26 @@ const App: React.FC = () => {
                      ))}
                    </div>
                 </section>
+
+                <section className="bg-sky-500/5 border border-sky-500/20 p-4 rounded-lg">
+                   <h3 className="text-[10px] font-mono text-sky-400 uppercase tracking-widest mb-4 flex items-center gap-2 font-black">
+                     <span className="w-4 h-[1px] bg-sky-400"></span> Systemic_Interlinks
+                   </h3>
+                   <div className="space-y-3">
+                     {selectedPhase.interlinks.map((link, idx) => (
+                       <div key={idx} className="border-b border-sky-500/10 pb-2 last:border-0">
+                          <div className="flex justify-between items-center mb-1">
+                             <span className="text-[10px] font-black text-sky-200 uppercase">{link.concept}</span>
+                             <span className="text-[9px] font-mono text-sky-600 font-bold">{link.targetPhase}</span>
+                          </div>
+                          <p className="text-[10px] text-slate-500 leading-snug">{link.description}</p>
+                       </div>
+                     ))}
+                   </div>
+                </section>
                 
                 <div className="pt-6 border-t border-slate-800">
-                   <h3 className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4">Benchmark_KPIs</h3>
+                   <h3 className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4 font-bold">Benchmark_KPIs</h3>
                    <div className="grid grid-cols-1 gap-2">
                      {selectedPhase.kpis.map((kpi, idx) => (
                        <div key={idx} className="flex items-center gap-3 bg-slate-900/40 p-2 rounded border border-slate-800/50">
@@ -139,7 +156,7 @@ const App: React.FC = () => {
               {/* Right Column: Code & Visual */}
               <div className="md:col-span-7 bg-[#020617] flex flex-col">
                 <div className="p-4 border-b border-slate-800 bg-slate-950/50 flex justify-between items-center">
-                  <span className="text-[9px] font-mono text-slate-500 uppercase">Interactive_Simulation</span>
+                  <span className="text-[9px] font-mono text-slate-500 uppercase font-bold">Interactive_Topology_Map</span>
                   <div className="flex gap-2">
                     <span className="w-2 h-2 rounded-full bg-slate-800"></span>
                     <span className="w-2 h-2 rounded-full bg-slate-800"></span>
@@ -152,10 +169,10 @@ const App: React.FC = () => {
 
                 <div className="flex-1 bg-slate-950 p-4 font-mono text-[11px] border-t border-slate-800 overflow-hidden group">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sky-600 uppercase text-[9px]">Gist_Artifact // {selectedPhase.codeSnippet.language}</span>
-                    <button className="text-slate-600 hover:text-sky-500 transition-colors">COPY_SNIPPET</button>
+                    <span className="text-sky-600 uppercase text-[9px] font-bold">Gist_Artifact // {selectedPhase.codeSnippet.language}</span>
+                    <button className="text-slate-600 hover:text-sky-500 transition-colors uppercase text-[9px] font-bold">COPY_SNIPPET</button>
                   </div>
-                  <pre className="text-sky-100/70 p-4 rounded bg-black/40 border border-slate-900 leading-5 overflow-x-auto">
+                  <pre className="text-sky-100/70 p-4 rounded bg-black/40 border border-slate-900 leading-5 overflow-x-auto scrollbar-hide">
                     <code>{selectedPhase.codeSnippet.code}</code>
                   </pre>
                 </div>
@@ -167,15 +184,15 @@ const App: React.FC = () => {
           <div className="bg-slate-950 border border-slate-800 p-2 rounded-lg flex flex-wrap gap-4 justify-between items-center px-6">
              <div className="flex gap-8">
                 <div className="flex flex-col">
-                  <span className="text-[8px] text-slate-600 uppercase font-mono">Sync_State</span>
-                  <span className="text-[10px] text-emerald-500 font-black uppercase">Active</span>
+                  <span className="text-[8px] text-slate-600 uppercase font-mono font-bold tracking-tighter">Sync_State</span>
+                  <span className="text-[10px] text-emerald-500 font-black uppercase tracking-widest">Active</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[8px] text-slate-600 uppercase font-mono">Buffer_Capacity</span>
-                  <span className="text-[10px] text-slate-300 font-black uppercase">98.2%</span>
+                  <span className="text-[8px] text-slate-600 uppercase font-mono font-bold tracking-tighter">Buffer_Capacity</span>
+                  <span className="text-[10px] text-slate-300 font-black uppercase tracking-widest">98.2%</span>
                 </div>
              </div>
-             <div className="text-[9px] font-mono text-slate-600 italic">
+             <div className="text-[9px] font-mono text-slate-600 italic uppercase tracking-tighter">
                System blueprint authorized for internal use only. Stratum Engine (c) 2025.
              </div>
           </div>

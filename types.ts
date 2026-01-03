@@ -18,6 +18,12 @@ export interface CodeSnippet {
   code: string;
 }
 
+export interface Interlink {
+  targetPhase: string;
+  concept: string;
+  description: string;
+}
+
 export interface PhaseData {
   id: string;
   title: string;
@@ -29,6 +35,7 @@ export interface PhaseData {
   requirements: TechnicalRequirement[];
   upskilling: string[];
   codeSnippet: CodeSnippet;
+  interlinks: Interlink[];
 }
 
 export interface Message {
