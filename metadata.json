@@ -1,0 +1,5 @@
+{
+  "name": "The Stratum: Technical Architect Dashboard",
+  "description": "A high-fidelity technical dashboard and architectural explorer for 'The Stratum'—a next-gen voxel engine project featuring SVDAG, WebGPU ray-marching, and GOAP AI systems.",
+  "requestFramePermissions": []
+}
