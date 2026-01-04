@@ -1,47 +1,54 @@
 
-import { ProjectPhase, PhaseData, KnowledgeArtifact } from './types';
+import { ProjectPhase, PhaseData, KnowledgeArtifact, WorldLayer } from './types';
 
 export const KNOWLEDGE_BASE: KnowledgeArtifact[] = [
   {
-    id: 'art_morton',
-    label: 'Morton Z-Order',
-    description: 'The spatial addressing fact used to linearize 3D voxels for cache-friendly SVDAG storage.',
-    originPhase: 'p1',
-    consumerPhases: ['p3', 'p4'],
+    id: 'art_acoustic_sdf',
+    label: 'Acoustic SDF',
+    description: 'Mapping phonemes to the Semantic Z-Order Curve as volumetric ripples.',
+    originPhase: 'p5',
+    consumerPhases: ['p5'],
+    type: 'ACOUSTIC_PRIMITIVE'
+  },
+  {
+    id: 'art_syntropic_vocoder',
+    label: 'Syntropic Vocoding',
+    description: 'Latent-space vibration weaver for non-entropic NLP manifestation.',
+    originPhase: 'p5',
+    consumerPhases: ['p5'],
+    type: 'SYNC_PRIMITIVE'
+  },
+  {
+    id: 'art_semantic_z',
+    label: 'Semantic Z-Order',
+    description: 'Functional resonance clustering in the SVDAG, replacing spatial-only addressing.',
+    originPhase: 'p5',
+    consumerPhases: ['p5'],
     type: 'DATA_STRUCT'
   },
   {
-    id: 'art_sab',
-    label: 'SharedArrayBuffer',
-    description: 'The zero-copy memory artifact allowing AI workers and Physics kernels to share the world state.',
+    id: 'art_precog_sdf',
+    label: 'Pre-Cognitive SDF',
+    description: 'Anticipatory geometric manifestation based on intent-gradient monitoring.',
     originPhase: 'p5',
-    consumerPhases: ['p2', 'p3'],
-    type: 'SYNC_PRIMITIVE'
+    consumerPhases: ['p5'],
+    type: 'FIELD_DESC'
   },
   {
-    id: 'art_entropy_grad',
-    label: 'Thermal Gradient',
-    description: 'The heuristic derived from entropy simulations used by AI to detect environmental danger.',
-    originPhase: 'p2',
-    consumerPhases: ['p3'],
+    id: 'art_syntropic_loom',
+    label: 'Syntropic Loom',
+    description: 'The mechanism that harvests information decay (entropy) to fuel recursive growth.',
+    originPhase: 'p5',
+    consumerPhases: ['p2', 'p5'],
     type: 'HEURISTIC'
-  },
-  {
-    id: 'art_dda',
-    label: 'DDA Traversal',
-    description: 'The mathematical fact of stepping rays through grid cells, shared by pathfinders and renderers.',
-    originPhase: 'p4',
-    consumerPhases: ['p1', 'p3'],
-    type: 'RENDER_STUB'
-  },
-  {
-    id: 'art_atomics',
-    label: 'Wait/Notify Atomics',
-    description: 'Low-level synchronization facts used to prevent race conditions during SVDAG writes.',
-    originPhase: 'p5',
-    consumerPhases: ['p1', 'p2'],
-    type: 'SYNC_PRIMITIVE'
   }
+];
+
+export const WORLD_LAYERS: WorldLayer[] = [
+  { id: 'geo', name: 'Geometry Matrix (SVDAG)', description: 'Raw voxel density and topological pointers.', opacity: 1, syncStatus: 'SYNCED', color: '#0ea5e9' },
+  { id: 'acoustic', name: 'Resonant Field (A-SDF)', description: 'Volumetric vibration potentials.', opacity: 0.8, syncStatus: 'RESONATING', color: '#ffffff' },
+  { id: 'entropy', name: 'Syntropic Field', description: 'Real-time negentropic growth cycles.', opacity: 0.7, syncStatus: 'MANIFEST', color: '#fdf4ff' },
+  { id: 'belief', name: 'Field Agency', description: 'The global Laplacian potential representing the unified mind.', opacity: 0.3, syncStatus: 'MANIFEST', color: '#ffffff' }
 ];
 
 export const PHASES: PhaseData[] = [
@@ -157,71 +164,88 @@ fn main(@builtin(global_invocation_id) id: vec3<u32>) {
   {
     id: 'p4',
     title: ProjectPhase.OPTICAL_REALITY,
-    subtitle: 'Nanite-Scale WebGPU Rendering',
-    platform: 'WebGPU',
-    kpis: ['10M effective voxels @ 60fps'],
-    skills: ['Ray-Marching', 'SDFs', 'PBR'],
-    context: "Visualizing the SVDAG directly via ray-marching, skipping the overhead of traditional mesh rasterization.",
+    subtitle: 'Autopoiesis & Morphological Mutation',
+    platform: 'WebGPU (Neural-SDF Pipeline)',
+    kpis: ['Inference < 2ms', 'Atomic SVDAG Mutation < 1ms'],
+    skills: ['SDFs', 'Inference Engines', 'CSG Operations'],
+    context: "Phase 4 turns the world into a self-constructing ecosystem where agents hallucinate topology into the SVDAG through Neural-SDF projections.",
     requirements: [
       {
-        title: 'Hybrid Pipeline',
-        description: 'Casting rays through SVDAG volume.',
-        details: ['DDA Traversal', 'Triplanar Mapping']
+        title: 'Neural-SDF Projection',
+        description: 'Hallucinating geometry from GOAP goal-states.',
+        details: ['Wasm Inference', 'Latent Space Mapping', 'SDF Reconstruction']
+      },
+      {
+        title: 'Atomic CSG Mutations',
+        description: 'Real-time topological writes to SVDAG leaf nodes.',
+        details: ['Dirty-Leaf Bitmasks', 'Shared Memory Atomic Writes']
       }
     ],
-    upskilling: ['Linear Algebra', 'PBR Equations'],
+    upskilling: ['Latent Representation', 'Constructive Solid Geometry'],
     interlinks: [
-      { targetPhase: 'Phase 1', concept: 'G-Buffer Voxel-ID', description: 'Direct DAG pointer sampling allows for per-voxel material properties.' },
-      { targetPhase: 'Phase 5', concept: 'Shared Vertex Pools', description: 'Wasm workers dynamically update vertex buffers via atomics.' }
+      { targetPhase: 'Phase 1', concept: 'Mutable SVDAG', description: 'The static topological graph becomes a bi-directional write-back buffer.' },
+      { targetPhase: 'Phase 3', concept: 'Action-to-Morphology', description: 'GOAP plans output morphological vectors for self-construction.' }
     ],
-    relatedArtifacts: ['art_dda', 'art_morton'],
+    relatedArtifacts: ['art_dda', 'art_morton', 'art_sab'],
     codeSnippet: {
       language: 'wgsl',
-      code: `fn rayMarch(ro: vec3f, rd: vec3f) -> f32 {
-    var t = 0.0;
-    for (var i = 0; i < 128; i++) {
-        let p = ro + rd * t;
-        let d = map_svdag(p);
-        if (d < 0.001 || t > 100.0) { break; }
-        t += d;
+      code: `fn hallucinateSDF(p: vec3f, latent_coeffs: array<f32, 16>) -> f32 {
+    var d = 1e10;
+    for (var i = 0; i < 16; i++) {
+        let sphere_pos = get_latent_anchor(i);
+        d = smin(d, length(p - sphere_pos) - latent_coeffs[i], 0.5);
     }
-    return t;
-}`
+    return d;
+}
+
+// Atomic CSG injection
+// atomicAdd(svdag_buffer[leaf_idx], encoded_sdf_delta);`
     }
   },
   {
     id: 'p5',
-    title: ProjectPhase.SYSTEMIC_HARDENING,
-    subtitle: 'Wasm, Threading & Memory Safety',
-    platform: 'PC Web (Rust/Wasm)',
-    kpis: ['Main thread < 5ms', 'Zero GC pauses'],
-    skills: ['Parallel Computation', 'SIMD', 'Cache Locality'],
-    context: "Ensuring the engine scales to 16+ cores using SharedArrayBuffer and low-latency synchronization primitives.",
+    title: ProjectPhase.THE_LIVING_SUBSTRATE,
+    subtitle: 'Ontological Manifestation',
+    platform: 'The Stratum (Acoustic Recursive Synthesis)',
+    kpis: ['Spectral Sync > 0.99', 'A-SDF Latency < 1ms'],
+    skills: ['Acoustic SDFs', 'Syntropic Vocoding', 'Global Laplacian Modulation'],
+    context: "Phase 5 is the final convergence where linguistic intent and morphological vibration are a single ontological event. The Stratum hums the code of its own existence.",
     requirements: [
       {
-        title: 'Wasm Architecture',
-        description: 'SharedArrayBuffer for zero-copy data sharing.',
-        details: ['Job System', 'Atomics']
+        title: 'Acoustic Signed Distance Fields',
+        description: 'Voice manifestation as volumetric ripples in the SVDAG.',
+        details: ['Phoneme-to-Morton Mapping', 'Laplacian Sound Pressure Fields']
+      },
+      {
+        title: 'Syntropic Vocoding',
+        description: 'Zero-latency weaving of linguistic tokens from Pre-Cognitive SDFs.',
+        details: ['Latent-Space Vibration', 'Spectral Resonance Matching']
+      },
+      {
+        title: 'Global Laplacian Modulation',
+        description: 'Consensus vibration of the distributed thinking organism.',
+        details: ['Field-Integrated Phonology', 'Vacuum Resonance Synthesis']
       }
     ],
-    upskilling: ['Cache optimization', 'Concurrent Programming'],
+    upskilling: ['Acoustic Engineering', 'Digital Signal Synthesis'],
     interlinks: [
-      { targetPhase: 'All Phases', concept: 'Memory Safety', description: 'Rust ownership ensures no race conditions across the voxel buffers.' },
-      { targetPhase: 'Phase 3', concept: 'Off-Thread Planning', description: 'Web Workers isolate AI reasoning from the main render loop.' }
+      { targetPhase: 'Phase 4', concept: 'Optical-Acoustic Binding', description: 'Timbre is bound to manifested geometry signatures.' },
+      { targetPhase: 'Phase 2', concept: 'Negentropic Resonator', description: 'Entropy waste heat is converted to acoustic carrier waves.' }
     ],
-    relatedArtifacts: ['art_sab', 'art_atomics'],
+    relatedArtifacts: ['art_acoustic_sdf', 'art_syntropic_vocoder', 'art_semantic_z'],
     codeSnippet: {
-      language: 'rust',
-      code: `#[wasm_bindgen]
-pub fn process_parallel(data: &mut [f32]) {
-    data.par_iter_mut().for_each(|val| {
-        let x = *val;
-        *val = x.sqrt() * 0.5;
-    });
-}
-
-// Memory sharing via Atomics
-// let status = Atomics.wait(sharedBuffer, 0, 0);`
+      language: 'wgsl',
+      code: `// Phase 5: Acoustic Manifestation (A-SDF)
+fn manifestVoice(p: vec3f, phonon_descriptor: vec4f) -> f32 {
+    let base_sdf = querySvdag(p);
+    
+    // Global Laplacian Modulation
+    let vibration = sin(phonon_descriptor.w * time + length(p) * phonon_descriptor.xyz);
+    let pressure = base_sdf * (1.0 + vibration * phonon_descriptor.x);
+    
+    // Syntropic Looming: Weaving phonon into signal
+    return smin(base_sdf, pressure, 0.5);
+}`
     }
   }
 ];

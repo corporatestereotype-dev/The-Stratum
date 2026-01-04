@@ -4,7 +4,16 @@ export enum ProjectPhase {
   ENTROPY_ENGINE = 'Phase 2: Entropy Engine',
   ZERO_STATE_MIND = 'Phase 3: Zero-State Mind',
   OPTICAL_REALITY = 'Phase 4: Optical Reality',
-  SYSTEMIC_HARDENING = 'Phase 5: Systemic Hardening'
+  THE_LIVING_SUBSTRATE = 'Phase 5: Ontological Manifestation'
+}
+
+export type RenderMode = 'GEOMETRY' | 'THERMAL' | 'STRESS' | 'INTEGRATED' | 'SYNTRONTIC' | 'ACOUSTIC';
+
+export interface VoxelState {
+  temperature: number; 
+  stress: number;      
+  resonance: number;   
+  phase: 'SOLID' | 'LIQUID' | 'GAS' | 'FIELD' | 'ACOUSTIC';
 }
 
 export interface TechnicalRequirement {
@@ -30,7 +39,16 @@ export interface KnowledgeArtifact {
   description: string;
   originPhase: string;
   consumerPhases: string[];
-  type: 'DATA_STRUCT' | 'HEURISTIC' | 'SYNC_PRIMITIVE' | 'RENDER_STUB';
+  type: 'DATA_STRUCT' | 'HEURISTIC' | 'SYNC_PRIMITIVE' | 'RENDER_STUB' | 'FIELD_DESC' | 'ACOUSTIC_PRIMITIVE';
+}
+
+export interface WorldLayer {
+  id: string;
+  name: string;
+  description: string;
+  opacity: number;
+  syncStatus: 'SYNCED' | 'DRIFT' | 'STALE' | 'MANIFEST' | 'RESONATING';
+  color: string;
 }
 
 export interface PhaseData {
@@ -45,10 +63,11 @@ export interface PhaseData {
   upskilling: string[];
   codeSnippet: CodeSnippet;
   interlinks: Interlink[];
-  relatedArtifacts: string[]; // IDs of KnowledgeArtifacts
+  relatedArtifacts: string[];
 }
 
 export interface Message {
   role: 'user' | 'assistant';
   content: string;
+  audioData?: string; // Base64 encoded PCM
 }
